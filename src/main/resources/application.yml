@@ -1,0 +1,47 @@
+spring:
+  server:
+    port: 8080
+    jsp-servlet:
+      init-parameters:
+        development: true
+    tomcat:
+      max-http-form-post-size: 200MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://localhost:3306/fujiDB
+      username: root
+      password: tmdals285!
+      pool-name: HikariDataSource
+      maximum-pool-size: 5
+      minimum-idle: 5
+      leak-detection-threshold: 3000000
+      connection-init-sql: SET NAMES utf8mb4
+      connection-test-query: select 1
+  jmx:
+    enabled: false
+  devtools:
+    restart:
+      enabled: false
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        use_sql_comments: false
+        query:
+          in_clause_parameter_padding: false
+        jdbc:
+          lob:
+            non_contextual_creation: false
+    com.zaxxer.hikari.HikariConfig: INFO
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: whoelse
