@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
 	id("org.springframework.boot") version "3.2.3"
@@ -19,6 +20,16 @@ repositories {
 	mavenCentral()
 }
 
+val DEFAULT_PROFILE = "local"
+//val profile = if (project.hasProperty("profile")) project.property("profile") as String else DEFAULT_PROFILE
+val profile = project.findProperty("profile")?.toString() ?: DEFAULT_PROFILE
+
+tasks.named<BootRun>("bootRun") {
+	println("Profile!!! $profile")
+	project.setProperty("profile", profile)
+//	systemProperty("spring.profiles.active", profile)
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
@@ -27,7 +38,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	runtimeOnly("com.mysql:mysql-connector-j")
+	//runtimeOnly("com.mysql:mysql-connector-j")
+	implementation("org.mariadb.jdbc:mariadb-java-client:3.1.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }

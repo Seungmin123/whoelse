@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class WhoelseApplication
 
 fun main(args: Array<String>) {
+	// -Dspring.profiles.active=local
 	runApplication<WhoelseApplication>(*args)
 }
