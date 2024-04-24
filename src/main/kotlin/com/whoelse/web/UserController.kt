@@ -24,7 +24,9 @@ class UserController(
      * UserInfo 있는지 조회
      */
     @GetMapping("/check-preference")
-    fun checkUserPreference(@AuthenticationPrincipal user: User): CommonResponse<Boolean> {
+    fun checkUserPreference(
+        @AuthenticationPrincipal user: User
+    ): CommonResponse<Boolean> {
         return CommonResponse.onSuccess(authService.checkUserPreference(user))
     }
 
@@ -43,7 +45,9 @@ class UserController(
      * 유저 정보 조회
      */
     @GetMapping("/preference")
-    fun getUserPreference(@AuthenticationPrincipal user: User): CommonResponse<UserInfo> {
+    fun getUserPreference(
+        @AuthenticationPrincipal user: User
+    ): CommonResponse<UserInfo> {
         return CommonResponse.onSuccess(authService.getUserPreference(user))
     }
 }

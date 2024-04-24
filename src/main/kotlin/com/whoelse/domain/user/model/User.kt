@@ -11,15 +11,6 @@ data class User (
     @Column(name = "id")
     var id: Long,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "login_type")
-    val loginType: LoginType,
-
-    @Enumerated(EnumType.STRING)
-    var gender: Gender = Gender.UNKNOWN,
-
-    var age: Int = -1,
-
     var nickname: String = "익명",
 
     @Enumerated(EnumType.STRING)

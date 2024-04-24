@@ -1,11 +1,13 @@
 package com.whoelse.service.auth
 
+import com.whoelse.domain.user.model.Gender
 import com.whoelse.domain.user.model.User
 import com.whoelse.domain.user.model.UserInfo
 import com.whoelse.domain.user.model.dto.UserInfoReq
 import com.whoelse.domain.user.repository.UserInfoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.util.ObjectUtils
 
 @Service
 class AuthService(
@@ -13,15 +15,19 @@ class AuthService(
 ) {
 
     fun checkUserPreference(user: User): Boolean {
-
-        return true
+        var userInfo: UserInfo? = userInfoRepository.findByIdOrNull(user.id)
+        return !ObjectUtils.isEmpty(userInfo)
     }
 
     fun setUserPreference(user: User, userInfoReq: UserInfoReq): UserInfo {
         return userInfoRepository.save(
             UserInfo(
                 id = user.id,
-                grade = userInfoReq.userGrade
+                loginType = userInfoReq.loginType,
+                grade = userInfoReq.userGrade,
+                gender = Gender.UNKNOWN,
+                age = -1,
+                email = userInfoReq.email
             )
         )
     }
