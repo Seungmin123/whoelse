@@ -1,20 +1,22 @@
 package com.whoelse.web
 
-import com.whoelse.domain.chat.ChatMessage
+import com.whoelse.domain.chat.model.ChatMessage
+import com.whoelse.service.chat.ChatService
 import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.Payload
-import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.web.bind.annotation.RestController
-import java.security.Principal
+import org.springframework.messaging.handler.annotation.SendTo
+import org.springframework.stereotype.Controller
 
-@RestController
+@Controller
 class ChatController(
-    private val template: SimpMessagingTemplate
-) {
-    @MessageMapping("/chat")
-    fun sendMessage(@Payload chatMessage: ChatMessage, principal: Principal) {
-        val senderId = principal.name
-        template.convertAndSendToUser(chatMessage.recipient.toString(), "/queue/messages", chatMessage)
+    private val chatService: ChatService
+){
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/chat/{recipient}")
+    fun sendMessage(@DestinationVariable recipient: String, @Payload chatMessage: ChatMessage): ChatMessage{
+        return chatMessage
     }
+
+
 }

@@ -1,14 +1,12 @@
-package com.whoelse.domain.chat
+package com.whoelse.domain.chat.model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity(name = "chat")
 class ChatMessage(
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     var id: Long,
 
@@ -24,6 +22,7 @@ class ChatMessage(
     @Column(name = "recipient")
     var recipient: Long = -1,
 
+    @Column(name = "createdAt")
     val timestamp: LocalDateTime = LocalDateTime.now()
 )
 
