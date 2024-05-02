@@ -18,5 +18,10 @@ class ChatController(
         return chatMessage
     }
 
+    @MessageMapping("/chat.sendNotice")
+    @SendTo("/notice")
+    fun sendNotice(@Payload chatMessage: ChatMessage): ChatMessage {
+        return chatMessage
+    }
 
 }
